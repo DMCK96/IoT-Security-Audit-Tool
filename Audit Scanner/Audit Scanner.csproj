@@ -44,6 +44,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Network\Models\DeviceModel.cs" />
+    <Compile Include="Network\Models\ServiceModel.cs" />
+    <Compile Include="Network\Models\VulnerabilityModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
