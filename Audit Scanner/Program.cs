@@ -2,6 +2,7 @@
 
  using System;
  using System.Collections.Generic;
+ using System.Net;
  using Audit_Scanner.Network;
  using Audit_Scanner.Network.Models;
 
@@ -12,7 +13,7 @@
          public static void Main(string[] args)
          {
              String selection = "";
-             var scanner = new Scanner();
+             var scanner = new AuditScanner();
              
              while (selection != "1" || selection != "2")
              {
@@ -30,15 +31,32 @@
                  Console.WriteLine("Please input the IP of the local device to be scanned:");
                  var address = Console.ReadLine();
 
-                 var singleDevice = new DeviceModel
-                 {
-                     Address = address
-                 };
+                 IPAddress ipAddress;
                  
-                 var devices = new List<DeviceModel>();
-                 devices.Add(singleDevice);
+                 if (IPAddress.TryParse(address, out ipAddress))
+                 {
+                     var singleDevice = new DeviceModel
+                     {
+                         Address = ipAddress
+                     };
+                     
+                     var devices = new List<DeviceModel>();
+                     devices.Add(singleDevice);
 
-                 var results = scanner.VulnerabilityScan(devices);
+                     var results = scanner.VulnerabilityScan(devices);
+                 }
+                 else
+                 {
+                     //TODO placeholder / wrap in While loop
+                     Console.WriteLine("");
+                     Console.WriteLine("Please input a valid IP:");
+                 }
+             }
+             else
+             {
+                 // We know at this point they chose option 2.
+                 
+                 //TODO host discovery
              }
          }
      }
