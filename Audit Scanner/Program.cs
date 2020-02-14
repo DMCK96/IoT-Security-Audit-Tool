@@ -2,6 +2,7 @@
 
  using System;
  using System.Collections.Generic;
+ using System.Linq;
  using System.Net;
  using Audit_Scanner.Network;
  using Audit_Scanner.Network.Models;
@@ -15,7 +16,7 @@
              String selection = "";
              var scanner = new AuditScanner();
              
-             while (selection != "1" || selection != "2")
+             while (selection != "1" && selection != "2")
              {
                  Console.WriteLine("You chose an invalid option, please type 1 or 2");
                  Console.WriteLine("");
@@ -35,15 +36,9 @@
                  
                  if (IPAddress.TryParse(address, out ipAddress))
                  {
-                     var singleDevice = new DeviceModel
-                     {
-                         Address = ipAddress
-                     };
-                     
-                     var devices = new List<DeviceModel>();
-                     devices.Add(singleDevice);
+                     var results = scanner.HostDiscover("192.168.137.168", true);
 
-                     var results = scanner.VulnerabilityScan(devices);
+                     var vulnerabilities = scanner.VulnerabilityScan(results);
                  }
                  else
                  {
@@ -55,7 +50,8 @@
              else
              {
                  // We know at this point they chose option 2.
-                 
+                 var results = scanner.HostDiscover("192.168.137.0", false, "24");
+                 var test = results;
                  //TODO host discovery
              }
          }

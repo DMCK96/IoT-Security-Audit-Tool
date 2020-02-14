@@ -1,4 +1,6 @@
-﻿namespace Audit_Scanner.Network.Models
+﻿using Audit_Scanner.Vulnerability.Models;
+
+namespace Audit_Scanner.Network.Models
 {
     public class ServiceModel
     {

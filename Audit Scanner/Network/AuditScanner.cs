@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Audit_Scanner.Network.Models;
+using RestSharp;
 using SaltwaterTaffy;
 using SaltwaterTaffy.Container;
 
@@ -11,18 +12,28 @@ namespace Audit_Scanner.Network
     {
         public List<DeviceModel> Devices { get; } = new List<DeviceModel>();
 
-        public List<DeviceModel> HostDiscover(string range)
+        public List<DeviceModel> HostDiscover(string ip, bool known, string range = "24")
         {
-            var target = new Target($"192.168.0.0/{range}");
+            Target target;
+            target = known ? new Target(ip) : new Target($"{ip}/{range}");
             var result = new Scanner(target).HostDiscovery();
 
             foreach (var device in result)
             {
-                var singleDevice = new DeviceModel
+                var singleDevice = new DeviceModel();
+                singleDevice.Address = device.Address;
+                singleDevice.Name = device.OsMatches.FirstOrDefault().Name;
+                singleDevice.OpenPorts = device.Ports.ToList();
+
+                foreach (var port in device.Ports)
                 {
-                    Address = device.Address,
-                    OpenPorts = device.Ports.ToList(),
-                };
+                    var singleService = new ServiceModel();
+                    singleService.Name = port.Service.Name;
+                    singleService.Version = port.Service.Version;
+                    singleService.Port = port.PortNumber.ToString();
+                }
+
+                Devices.Add(singleDevice);
             }
             
             return Devices;
@@ -30,7 +41,12 @@ namespace Audit_Scanner.Network
         
         public List<DeviceModel> VulnerabilityScan(List<DeviceModel> devices)
         {
-
+            var rest = new RestClient();
+                
+            foreach (var device in devices)
+            {
+                
+            }
             return devices;
         }
     }
