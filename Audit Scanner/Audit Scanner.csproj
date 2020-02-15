@@ -59,6 +59,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="RestSharp, Version=106.0.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75">
       <HintPath>..\packages\RestSharp.106.10.2-alpha.0.8\lib\net452\RestSharp.dll</HintPath>
       <Private>True</Private>
@@ -132,12 +136,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Network\Models\DeviceModel.cs" />
-    <Compile Include="Network\Models\ServiceModel.cs" />
-    <Compile Include="Network\AuditScanner.cs" />
+    <Compile Include="Controllers\Network\AuditScanner.cs" />
+    <Compile Include="Controllers\Vulnerability\VulnerabilityClient.cs" />
+    <Compile Include="Helper\NetworkInterfaceHelper.cs" />
+    <Compile Include="Models\DeviceModel.cs" />
+    <Compile Include="Models\ServiceModel.cs" />
+    <Compile Include="Models\VulnerabilityModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Vulnerability\Models\VulnerabilityModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="bin\Debug" />
