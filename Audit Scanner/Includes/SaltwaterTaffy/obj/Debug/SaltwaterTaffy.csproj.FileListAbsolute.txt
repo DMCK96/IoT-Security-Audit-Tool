@@ -1,0 +1,16 @@
+E:\Repositories\SaltwaterTaffy-master\SaltwaterTaffy\bin\Debug\SaltwaterTaffy.dll
+E:\Repositories\SaltwaterTaffy-master\SaltwaterTaffy\bin\Debug\SaltwaterTaffy.pdb
+E:\Repositories\SaltwaterTaffy-master\SaltwaterTaffy\bin\Debug\Simple.DotNMap.dll
+E:\Repositories\SaltwaterTaffy-master\SaltwaterTaffy\obj\Debug\SaltwaterTaffy.dll
+E:\Repositories\SaltwaterTaffy-master\SaltwaterTaffy\obj\Debug\SaltwaterTaffy.pdb
+E:\Repositories\SaltwaterTaffy-master\SaltwaterTaffy\obj\Debug\SaltwaterTaffy.csprojAssemblyReference.cache
+E:\Repositories\SaltwaterTaffy-master\SaltwaterTaffy\obj\Debug\SaltwaterTaffy.csproj.CoreCompileInputs.cache
+E:\Repositories\SaltwaterTaffy-master\SaltwaterTaffy\obj\Debug\SaltwaterTaffy.csproj.CopyComplete
+E:\Repositories\IoT-Security-Audit-Tool\Audit Scanner\Includes\SaltwaterTaffy\bin\Debug\SaltwaterTaffy.dll
+E:\Repositories\IoT-Security-Audit-Tool\Audit Scanner\Includes\SaltwaterTaffy\bin\Debug\SaltwaterTaffy.pdb
+E:\Repositories\IoT-Security-Audit-Tool\Audit Scanner\Includes\SaltwaterTaffy\bin\Debug\Simple.DotNMap.dll
+E:\Repositories\IoT-Security-Audit-Tool\Audit Scanner\Includes\SaltwaterTaffy\obj\Debug\SaltwaterTaffy.csprojAssemblyReference.cache
+E:\Repositories\IoT-Security-Audit-Tool\Audit Scanner\Includes\SaltwaterTaffy\obj\Debug\SaltwaterTaffy.csproj.CoreCompileInputs.cache
+E:\Repositories\IoT-Security-Audit-Tool\Audit Scanner\Includes\SaltwaterTaffy\obj\Debug\SaltwaterTaffy.csproj.CopyComplete
+E:\Repositories\IoT-Security-Audit-Tool\Audit Scanner\Includes\SaltwaterTaffy\obj\Debug\SaltwaterTaffy.dll
+E:\Repositories\IoT-Security-Audit-Tool\Audit Scanner\Includes\SaltwaterTaffy\obj\Debug\SaltwaterTaffy.pdb

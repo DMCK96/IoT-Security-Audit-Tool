@@ -67,9 +67,6 @@
       <HintPath>..\packages\RestSharp.106.10.2-alpha.0.8\lib\net452\RestSharp.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SaltwaterTaffy, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>Includes\SaltwaterTaffy.dll</HintPath>
-    </Reference>
     <Reference Include="Simple.DotNMap, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>Includes\Simple.DotNMap.dll</HintPath>
     </Reference>
@@ -139,8 +136,6 @@
     <Compile Include="Controllers\Network\AuditScanner.cs" />
     <Compile Include="Controllers\Vulnerability\VulnerabilityClient.cs" />
     <Compile Include="Helper\NetworkInterfaceHelper.cs" />
-    <Compile Include="Models\DeviceModel.cs" />
-    <Compile Include="Models\ServiceModel.cs" />
     <Compile Include="Models\VulnerabilityModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -149,9 +144,6 @@
     <Folder Include="bin\Debug" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Includes\SaltwaterTaffy.dll" />
-    <Content Include="Includes\SaltwaterTaffy.pdb" />
-    <Content Include="Includes\Simple.DotNMap.dll" />
     <Content Include="obj\Debug\Audit Scanner.csprojAssemblyReference.cache" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +152,12 @@
   <ItemGroup>
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Includes\SaltwaterTaffy\SaltwaterTaffy.csproj">
+      <Project>{718dba7e-6513-4165-b3d6-9815b4083bae}</Project>
+      <Name>SaltwaterTaffy</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

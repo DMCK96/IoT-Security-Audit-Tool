@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Audit_Scanner.Controllers.Vulnerability;
 using Audit_Scanner.Helper;
-using Audit_Scanner.Network.Models;
 using RestSharp;
 using SaltwaterTaffy;
 using SaltwaterTaffy.Container;
@@ -12,8 +11,6 @@ namespace Audit_Scanner.Network
 {
     public class AuditScanner
     {
-        public List<DeviceModel> Devices { get; } = new List<DeviceModel>();
-
         public List<Host> HostDiscover(string ip, bool known, string range = "24")
         {
             Target target;
@@ -28,38 +25,21 @@ namespace Audit_Scanner.Network
             {
                 var localIpAddresses = NetworkInterfaceHelper.GetLocalIPAddresses();
 
-                foreach (var address in localIpAddresses)
+                foreach (var address in localIpAddresses.Where(x => !x.Contains("100.74.172.0")))
                 {
                     target = new Target($"{address}/{range}");
-                    foundHosts.AddRange(new Scanner(target).HostDiscovery());
+                    var discovery = new Scanner(target).HostDiscovery();
+                    foundHosts.AddRange(discovery.Where(x => x.Ports.Count() > 90)); //LINQ is just to exclude localhost
                 }
             }
             
             return foundHosts;
         }
         
-        public List<DeviceModel> VulnerabilityScan(List<DeviceModel> devices)
+        public List<Host> VulnerabilityScan(List<Host> devices)
         {
             var client = new VulnerabilityClient();
 
-            /*foreach (var device in result)
-            {
-                var singleDevice = new DeviceModel();
-                singleDevice.Address = device.Address;
-                singleDevice.Name = device.OsMatches.FirstOrDefault().Name;
-                singleDevice.OpenPorts = device.Ports.ToList();
-
-                foreach (var port in device.Ports)
-                {
-                    var singleService = new ServiceModel();
-                    singleService.Name = port.Service.Name;
-                    singleService.Version = port.Service.Version;
-                    singleService.Port = port.PortNumber.ToString();
-                }
-
-                Devices.Add(singleDevice);
-            }*/
-            
             return client.ScanVulnerabilities(devices);
         }
     }

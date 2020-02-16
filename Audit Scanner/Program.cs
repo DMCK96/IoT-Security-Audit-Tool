@@ -5,7 +5,6 @@
  using System.Linq;
  using System.Net;
  using Audit_Scanner.Network;
- using Audit_Scanner.Network.Models;
 
  namespace Audit_Scanner
  {
@@ -38,7 +37,7 @@
                  {
                      var results = scanner.HostDiscover("192.168.137.168", true);
 
-                     var vulnerabilities = scanner.VulnerabilityScan(results);
+                     //var vulnerabilities = scanner.VulnerabilityScan(results);
                  }
                  else
                  {
@@ -51,7 +50,11 @@
              {
                  // We know at this point they chose option 2.
                  var results = scanner.HostDiscover("192.168.137.0", false, "24");
-                 var test = results;
+
+                 if (results.Any())
+                 {
+                     var vulnerableDevices = scanner.VulnerabilityScan(results);
+                 }
                  //TODO host discovery
              }
          }
