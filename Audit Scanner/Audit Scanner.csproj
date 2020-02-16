@@ -136,6 +136,7 @@
     <Compile Include="Controllers\Network\AuditScanner.cs" />
     <Compile Include="Controllers\Vulnerability\VulnerabilityClient.cs" />
     <Compile Include="Helper\NetworkInterfaceHelper.cs" />
+    <Compile Include="Models\DeviceModel.cs" />
     <Compile Include="Models\VulnerabilityModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

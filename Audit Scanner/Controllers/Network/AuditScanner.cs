@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Audit_Scanner.Controllers.Vulnerability;
 using Audit_Scanner.Helper;
+using Audit_Scanner.Vulnerability.Models;
 using RestSharp;
 using SaltwaterTaffy;
 using SaltwaterTaffy.Container;
@@ -29,14 +30,14 @@ namespace Audit_Scanner.Network
                 {
                     target = new Target($"{address}/{range}");
                     var discovery = new Scanner(target).HostDiscovery();
-                    foundHosts.AddRange(discovery.Where(x => x.Ports.Count() > 90)); //LINQ is just to exclude localhost
+                    foundHosts.AddRange(discovery.Where(x => x.Ports.Count() < 90)); //LINQ is just to exclude localhost
                 }
             }
             
             return foundHosts;
         }
         
-        public List<Host> VulnerabilityScan(List<Host> devices)
+        public List<DeviceModel> VulnerabilityScan(List<Host> devices)
         {
             var client = new VulnerabilityClient();
 
