@@ -34,6 +34,8 @@ namespace SaltwaterTaffy
                             x => new Host
                                 {
                                     Address = IPAddress.Parse(x.address.addr),
+                                    PhysicalAddress = x.Items.OfType<address>().Where(y => y.addrtype == addressAddrtype.mac).DefaultIfEmpty(null).FirstOrDefault()?.addr,
+                                    Vendor = x.Items.OfType<address>().Where(y => y.addrtype == addressAddrtype.mac).DefaultIfEmpty(null).FirstOrDefault()?.vendor,
                                     Ports =
                                         PortsSection(
                                             x.Items.OfType<ports>().DefaultIfEmpty(null).FirstOrDefault()),
@@ -245,11 +247,42 @@ namespace SaltwaterTaffy
             NmapContext ctx = GetContext();
             ctx.Options.AddAll(new[]
                 {
-                    NmapFlag.TcpSynScan,
-                    NmapFlag.A,
-                    NmapFlag.ServiceVersion,
-                    NmapFlag.OsDetection
+                    NmapFlag.HostScan,
+                    NmapFlag.AggressiveTiming,
                 });
+
+            return new ScanResult(ctx.Run()).Hosts;
+        }
+        
+        /// <summary>
+        ///     Perform service discovery and OS detection on the intended target (preferably a subnet or IP range)
+        /// </summary>
+        /// <returns>A collection of Hosts detailing the results of the discovery</returns>
+        public IEnumerable<Host> ServiceDiscovery()
+        {
+            NmapContext ctx = GetContext();
+            ctx.Options.AddAll(new[]
+            {
+                NmapFlag.A,
+                NmapFlag.ServiceVersion,
+                NmapFlag.AggressiveTiming,
+            });
+
+            return new ScanResult(ctx.Run()).Hosts;
+        }
+        
+        /// <summary>
+        ///     Perform CVE Vulnerability Scan for potential vulnerabilities
+        /// </summary>
+        /// <returns>A collection of Hosts detailing the results of the discovery</returns>
+        public IEnumerable<Host> VulnerabilityDiscovery()
+        {
+            NmapContext ctx = GetContext();
+            ctx.Options.AddAll(new[]
+            {
+                NmapFlag.TreatHostsAsOnline,
+                NmapFlag.ScriptVuln
+            });
 
             return new ScanResult(ctx.Run()).Hosts;
         }

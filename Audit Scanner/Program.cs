@@ -35,9 +35,9 @@
                  
                  if (IPAddress.TryParse(address, out ipAddress))
                  {
-                     var results = scanner.HostDiscover("192.168.137.168", true);
+                     var results = scanner.HostDiscover(ipAddress.ToString(), true);
 
-                     //var vulnerabilities = scanner.VulnerabilityScan(results);
+                     var vulnerabilities = scanner.VulnerabilityScan(results);
                  }
                  else
                  {
@@ -53,6 +53,8 @@
 
                  if (results.Any())
                  {
+                     var services = scanner.ServiceScan(results);
+                     var cve = scanner.CveScan(services);
                      var vulnerableDevices = scanner.VulnerabilityScan(results);
                  }
                  //TODO host discovery

@@ -8,7 +8,7 @@ namespace Audit_Scanner.Helper
 {
     public class NetworkInterfaceHelper
     {
-        public static List<string> GetLocalIPAddresses()
+        public static List<string> GetLocalIpList()
         {
             var list = new List<string>();
 
@@ -23,14 +23,27 @@ namespace Audit_Scanner.Helper
                     if (address.PrefixLength == 24)
                     {
                         var ipString = address.Address.ToString();
-                        var updated = ipString.Substring(0, ipString.LastIndexOf(".", StringComparison.Ordinal) + 1);
-                        updated = updated + "0";
-                        list.Add(updated);
+                        
+                        list.Add(ipString);
                     }
                 }
             }
             
             return list;
+        }
+
+        public static List<string> ConvertLocalIpToRange(List<string> ipList)
+        {
+            var rangeList = new List<string>();
+            
+            foreach (var ip in ipList)
+            {
+                var updated = ip.Substring(0, ip.LastIndexOf(".", StringComparison.Ordinal) + 1);
+                updated = updated + "0";
+                rangeList.Add(updated);
+            }
+
+            return rangeList;
         }
     }
 }

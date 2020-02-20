@@ -56,6 +56,10 @@ namespace SaltwaterTaffy.Container
     public struct Host
     {
         public IPAddress Address { get; set; }
+        
+        public string PhysicalAddress { get; set; }
+        
+        public string Vendor { get; set; }
         public IEnumerable<string> Hostnames { get; set; }
         public IEnumerable<Port> Ports { get; set; }
         public IEnumerable<ExtraPorts> ExtraPorts { get; set; }
