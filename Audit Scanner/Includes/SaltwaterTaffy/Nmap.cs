@@ -188,7 +188,7 @@ namespace SaltwaterTaffy
                 {NmapFlag.ScriptArgs, "--script-args"},
                 {NmapFlag.ScriptTrace, "--script-trace"},
                 {NmapFlag.ScriptUpdateDb, "--script-updatedb"},
-                {NmapFlag.ScriptVuln, "--script vuln"},
+                {NmapFlag.ScriptVuln, "--script nmap-vulners"},
                 {NmapFlag.OsDetection, "-O"},
                 {NmapFlag.OsScanLimit, "--osscan-limit"},
                 {NmapFlag.OsScanGuess, "--osscan-guess"},
