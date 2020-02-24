@@ -5,6 +5,8 @@
  using System.Linq;
  using System.Net;
  using Audit_Scanner.Network;
+ using Audit_Scanner.Vulnerability.Models;
+ using SaltwaterTaffy.Container;
 
  namespace Audit_Scanner
  {
@@ -37,7 +39,16 @@
                  {
                      var results = scanner.HostDiscover(ipAddress.ToString(), true);
 
-                     var vulnerabilities = scanner.VulnerabilityScan(results);
+                     if (results.Any())
+                     {
+                         var services = scanner.ServiceScan(results);
+                         var vulnerableDevices = scanner.VulnerabilityScan(services);
+
+                         if (vulnerableDevices.Any())
+                         {
+                             OutputResults(vulnerableDevices);
+                         }
+                     }
                  }
                  else
                  {
@@ -54,10 +65,48 @@
                  if (results.Any())
                  {
                      var services = scanner.ServiceScan(results);
-                     var cve = scanner.CveScan(services);
-                     var vulnerableDevices = scanner.VulnerabilityScan(results);
+                     var vulnerableDevices = scanner.VulnerabilityScan(services);
+
+                     if (vulnerableDevices.Any())
+                     {
+                         OutputResults(vulnerableDevices);
+                     }
                  }
-                 //TODO host discovery
+             }
+         }
+
+         private static void OutputResults(List<DeviceModel> vulnerableDevices)
+         {
+             Console.WriteLine("");
+             Console.WriteLine("Potential vulnerabilities have been found in your devices!");
+             Console.WriteLine("Displaying most recent vulnerabilities (maximum 5):");
+             Console.WriteLine("");
+
+             foreach (var device in vulnerableDevices)
+             {
+                 Console.WriteLine("Device Details:");
+                 Console.WriteLine($"Local IP Address: {device.IP}");
+                 Console.WriteLine($"Hostname: {device.Hostname}");
+                 Console.WriteLine($"MAC Address: {device.PhysicalAddress}");
+                 Console.WriteLine($"Manufacturer: {device.Vendor}");
+                 Console.WriteLine("");
+                 Console.WriteLine("Vulnerabilities:");
+
+                 int counter = 1;
+                             
+                 foreach (var vulnerability in device.Vulnerabilities)
+                 {
+                     Console.WriteLine($"---- Vulnerability ({counter}/{device.Vulnerabilities.Count()}) ----");
+                     Console.WriteLine($"Service: {vulnerability.Service}");
+                     Console.WriteLine($"Port: {vulnerability.Port}");
+                     Console.WriteLine($"Type: {vulnerability.Type}");
+                     if (!String.IsNullOrWhiteSpace(vulnerability.CVE)) Console.WriteLine($"CVE: {vulnerability.CVE}");
+                     Console.WriteLine($"Source: {vulnerability.Source}");
+                     Console.WriteLine($"Details: {vulnerability.Description}");
+                     Console.WriteLine("");
+                     
+                     counter += 1;
+                 }
              }
          }
      }

@@ -69,7 +69,7 @@ namespace Audit_Scanner.Network
             return updatedDevices;
         }
 
-        public List<DeviceModel> CveScan(List<Host> devices)
+        /*public List<DeviceModel> CveScan(List<Host> devices)
         {
             var deviceList = new List<DeviceModel>();
             
@@ -82,13 +82,18 @@ namespace Audit_Scanner.Network
             }
             
             return deviceList;
-        }
+        }*/
         
         public List<DeviceModel> VulnerabilityScan(List<Host> devices)
         {
+            Console.WriteLine("");
+            Console.WriteLine("Vulnerability scan started, please wait...");
             var client = new VulnerabilityClient();
-
-            return client.ScanVulnerabilities(devices);
+            var vulnerableDevices = client.ScanVulnerabilities(devices);
+            
+            Console.WriteLine($"Vulnerability scan completed, {vulnerableDevices.Count()} device(s) may have vulnerabilities");
+            
+            return vulnerableDevices;
         }
     }
 }

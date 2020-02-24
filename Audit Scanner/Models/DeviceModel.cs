@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Audit_Scanner.Models;
 
 namespace Audit_Scanner.Vulnerability.Models
 {
