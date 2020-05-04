@@ -4,6 +4,7 @@
  using System.Collections.Generic;
  using System.Linq;
  using System.Net;
+ using Audit_Scanner.Controllers.Vulnerability;
  using Audit_Scanner.Network;
  using Audit_Scanner.Vulnerability.Models;
  using SaltwaterTaffy.Container;
@@ -14,6 +15,9 @@
      {
          public static void Main(string[] args)
          {
+             var bruteforceClient = new BruteforceController();
+             bruteforceClient.BruteforceTelnet();
+             
              String selection = "";
              var scanner = new AuditScanner();
              

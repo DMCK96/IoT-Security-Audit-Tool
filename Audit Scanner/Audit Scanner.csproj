@@ -143,8 +143,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Network\AuditScanner.cs" />
+    <Compile Include="Controllers\Vulnerability\BruteforceController.cs" />
     <Compile Include="Controllers\Vulnerability\VulnerabilityClient.cs" />
     <Compile Include="Helper\NetworkInterfaceHelper.cs" />
+    <Compile Include="Models\CredentialModel.cs" />
     <Compile Include="Models\DeviceModel.cs" />
     <Compile Include="Models\VulnerabilityModel.cs" />
     <Compile Include="Program.cs" />
@@ -155,6 +157,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="obj\Debug\Audit Scanner.csprojAssemblyReference.cache" />
+    <Content Include="Resources\Credentials.csv" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
