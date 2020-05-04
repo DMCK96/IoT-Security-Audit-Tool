@@ -263,7 +263,7 @@ namespace SaltwaterTaffy
             NmapContext ctx = GetContext();
             ctx.Options.AddAll(new[]
             {
-                NmapFlag.A,
+                NmapFlag.OsDetection,
                 NmapFlag.ServiceVersion,
                 NmapFlag.AggressiveTiming,
             });
