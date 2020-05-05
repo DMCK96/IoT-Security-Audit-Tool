@@ -15,9 +15,6 @@
      {
          public static void Main(string[] args)
          {
-             var bruteforceClient = new BruteforceController();
-             bruteforceClient.BruteforceTelnet();
-             
              String selection = "";
              var scanner = new AuditScanner();
              
@@ -45,6 +42,9 @@
 
                      if (results.Any())
                      {
+                         var bruteforceClient = new BruteforceController();
+                         bruteforceClient.BruteforceTelnet(results.FirstOrDefault());
+                         
                          var services = scanner.ServiceScan(results);
                          var vulnerableDevices = scanner.VulnerabilityScan(services);
 

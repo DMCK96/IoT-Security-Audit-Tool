@@ -167,6 +167,10 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.9.6\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Includes\MinimalisticTelnet\MinimalisticTelnet.csproj">
+      <Project>{ad79ebb8-1157-4120-99d2-433559991a16}</Project>
+      <Name>MinimalisticTelnet</Name>
+    </ProjectReference>
     <ProjectReference Include="Includes\SaltwaterTaffy\SaltwaterTaffy.csproj">
       <Project>{718dba7e-6513-4165-b3d6-9815b4083bae}</Project>
       <Name>SaltwaterTaffy</Name>

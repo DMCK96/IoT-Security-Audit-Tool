@@ -5,5 +5,6 @@
         public string Username { get; set; }
         public string Password { get; set; }
         public string Manufacturer { get; set; }
+        public bool Successful { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace MinimalisticTelnet
         SGA = 3
     }
 
-    class TelnetConnection
+    public class TelnetConnection : IDisposable
     {
         TcpClient tcpSocket;
 
@@ -127,6 +127,11 @@ namespace MinimalisticTelnet
                         break;
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
