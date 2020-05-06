@@ -43,7 +43,7 @@
                      if (results.Any())
                      {
                          var bruteforceClient = new BruteforceController();
-                         bruteforceClient.BruteforceTelnet(results.FirstOrDefault());
+                         bruteforceClient.BruteforceSSH(results.FirstOrDefault());
                          
                          var services = scanner.ServiceScan(results);
                          var vulnerableDevices = scanner.VulnerabilityScan(services);
