@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
+using System.Timers;
 using Audit_Scanner.Controllers.Vulnerability;
 using Audit_Scanner.Helper;
 using Audit_Scanner.Vulnerability.Models;
@@ -20,6 +22,8 @@ namespace Audit_Scanner.Network
             Target target;
             var foundHosts = new List<Host>();
             Console.WriteLine("");
+            var timer = new Stopwatch();;
+            timer.Start();
             
             if (known)
             {
@@ -41,7 +45,8 @@ namespace Audit_Scanner.Network
                     Console.WriteLine($"Host discovery found {discovery.Count()} online devices in {address}/{range}");
                 }
             }
-            Console.WriteLine($"Host discovery scan completed, {foundHosts.Count} online devices have been found.");
+            timer.Stop();
+            Console.WriteLine($"Host discovery scan completed, {foundHosts.Count} online devices have been found. Scan took {timer.Elapsed.Seconds} seconds to complete.");
             return foundHosts;
         }
 
