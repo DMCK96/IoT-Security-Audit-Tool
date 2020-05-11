@@ -74,21 +74,6 @@ namespace Audit_Scanner.Network
             return updatedDevices;
         }
 
-        /*public List<DeviceModel> CveScan(List<Host> devices)
-        {
-            var deviceList = new List<DeviceModel>();
-            
-            Console.WriteLine("");
-            Console.WriteLine("CVE scan started, please wait...");
-
-            foreach (var device in devices)
-            {
-                var Cve = new Scanner(new Target(device.Address)).VulnerabilityDiscovery();
-            }
-            
-            return deviceList;
-        }*/
-        
         public List<DeviceModel> VulnerabilityScan(List<Host> devices)
         {
             Console.WriteLine("");

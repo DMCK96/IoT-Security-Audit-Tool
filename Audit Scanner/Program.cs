@@ -67,6 +67,7 @@ using Audit_Scanner.Models;
 
                          if (vulnerableDevices.Any())
                          {
+                             BruteforceModule(vulnerableDevices);
                              OutputResults(vulnerableDevices);
                          }
                      }
@@ -92,7 +93,23 @@ using Audit_Scanner.Models;
 
                      if (vulnerableDevices.Any())
                      {
-                         if (vulnerableDevices.Any(x => Enumerable.Where<VulnerabilityModel>(x.Vulnerabilities, v => v.Port == 22 || v.Port == 23).Any()))
+                         BruteforceModule(vulnerableDevices);
+                         
+                         OutputResults(vulnerableDevices);
+                     }
+                 }
+                 
+                 Console.WriteLine("");
+                 Console.WriteLine("No devices have been found, please ensure the device is powered on and on the same network.");
+                 Console.WriteLine("Press any key to close this tool and try again.");
+                 Console.ReadKey();
+                 System.Environment.Exit(0);
+             }
+         }
+
+         private static void BruteforceModule(List<DeviceModel> vulnerableDevices)
+         {
+             if (vulnerableDevices.Any(x => Enumerable.Where<VulnerabilityModel>(x.Vulnerabilities, v => v.Port == 22 || v.Port == 23).Any()))
                          {
                              var bruteforceSelection = "";
                              var bruteforceCycle = 0;
@@ -155,19 +172,8 @@ using Audit_Scanner.Models;
                                  }
                              }
                          }
-                         
-                         OutputResults(vulnerableDevices);
-                     }
-                 }
-                 
-                 Console.WriteLine("");
-                 Console.WriteLine("No devices have been found, please ensure the device is powered on and on the same network.");
-                 Console.WriteLine("Press any key to close this tool and try again.");
-                 Console.ReadKey();
-                 System.Environment.Exit(0);
-             }
          }
-
+         
          private static void OutputResults(List<DeviceModel> vulnerableDevices)
          {
              Console.WriteLine("");
