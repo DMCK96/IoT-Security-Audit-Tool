@@ -122,6 +122,7 @@ using Audit_Scanner.Models;
                                      Console.WriteLine("");
                                  }
                                  
+                                 Console.WriteLine("");
                                  Console.WriteLine("Your device may be vulnerable to bruteforce, would you like to test against this (it may take a few minutes)?");
                                  Console.WriteLine("Please select an option (type the number and press enter):");
                                  Console.WriteLine("1. Yes");
@@ -162,7 +163,7 @@ using Audit_Scanner.Models;
                                  {
                                      foreach (var device in vulnerableTelnetDevices)
                                      {
-                                         var deviceName = device.Hostname != null && device.Hostname != ""
+                                         var deviceName = device.Hostname != null && device.Hostname != "" && !device.Hostname.Contains("not found")
                                              ? device.Hostname
                                              : device.IP;
                                          Console.WriteLine($"Starting telnet bruteforce on {deviceName}, please wait...");
