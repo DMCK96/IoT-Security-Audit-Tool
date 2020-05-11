@@ -11,6 +11,8 @@ namespace Audit_Scanner.Vulnerability.Models
         
         public string PhysicalAddress { get; set; }
         
+        public List<int> OpenPorts { get; set; }
+        
         public string Vendor { get; set; }
         public List<VulnerabilityModel> Vulnerabilities { get; set; }
     }

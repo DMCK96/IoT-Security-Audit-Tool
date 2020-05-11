@@ -109,7 +109,7 @@ using Audit_Scanner.Models;
 
          private static void BruteforceModule(List<DeviceModel> vulnerableDevices)
          {
-             if (vulnerableDevices.Any(x => Enumerable.Where<VulnerabilityModel>(x.Vulnerabilities, v => v.Port == 22 || v.Port == 23).Any()))
+             if (vulnerableDevices.Any(p => p.OpenPorts.Contains(22) || p.OpenPorts.Contains(23)))
                          {
                              var bruteforceSelection = "";
                              var bruteforceCycle = 0;
@@ -135,12 +135,10 @@ using Audit_Scanner.Models;
                              if (bruteforceSelection == "1")
                              {
                                  var bruteforceClient = new BruteforceController();
+
+                                 var vulnerableSSHDevices = vulnerableDevices.Where(p => p.OpenPorts.Contains(22));
                                  
-                                 var vulnerableSSHDevices = vulnerableDevices.Where(x =>
-                                     x.Vulnerabilities.Any(v => v.Port == 22));
-                                 
-                                 var vulnerableTelnetDevices = vulnerableDevices.Where(x =>
-                                     x.Vulnerabilities.Any(v => v.Port == 23));
+                                 var vulnerableTelnetDevices = vulnerableDevices.Where(p => p.OpenPorts.Contains(23));
                                  
                                  Console.WriteLine("");
                                  Console.WriteLine("--- Bruteforce Module ---");
