@@ -2,9 +2,11 @@
 
  using System;
  using System.Collections.Generic;
+ using System.Diagnostics;
  using System.Linq;
  using System.Net;
  using System.Net.Mime;
+ using System.Net.Sockets;
  using Audit_Scanner.Controllers.Vulnerability;
 using Audit_Scanner.Models;
  using Audit_Scanner.Network;
@@ -44,11 +46,11 @@ using Audit_Scanner.Models;
                  var address = Console.ReadLine();
                  
                  IPAddress ipAddress = null;
-
+                 
                  try
                  {
                      var hostNameIp = Dns.GetHostEntry(address);
-                     ipAddress = hostNameIp.AddressList.FirstOrDefault();
+                     ipAddress = hostNameIp.AddressList.Where(x => x.AddressFamily == AddressFamily.InterNetwork).FirstOrDefault();
                  }
                  catch
                  {
@@ -58,7 +60,7 @@ using Audit_Scanner.Models;
                  // At this point if ipAddress is not null then the hostname was found, otherwise we should try to parse the IP
                  if (ipAddress != null || IPAddress.TryParse(address, out ipAddress))
                  {
-                     var results = scanner.HostDiscover(ipAddress.ToString(), true);
+                     var results = scanner.HostDiscover(true, ipAddress.ToString());
 
                      if (results.Any())
                      {
@@ -84,7 +86,7 @@ using Audit_Scanner.Models;
              else
              {
                  // We know at this point they chose option 2.
-                 var results = scanner.HostDiscover("192.168.137.0", false, "24");
+                 var results = scanner.HostDiscover(false);
 
                  if (results.Any())
                  {
@@ -149,11 +151,12 @@ using Audit_Scanner.Models;
                                  {
                                      foreach (var device in vulnerableSSHDevices)
                                      {
-                                         var deviceName = device.Hostname != null && device.Hostname != ""
-                                             ? device.Hostname
-                                             : device.IP;
+                                         var deviceName = device.Hostname == null || device.Hostname == "" || device.Hostname.ToLower() == "hostname not found."
+                                             ? device.IP
+                                             : device.Hostname;
                                          Console.WriteLine($"Starting SSH bruteforce on {deviceName}, please wait...");
                                          bruteforceClient.BruteforceSSH(device);
+                                         Console.WriteLine($"Starting SSH bruteforce on {deviceName}.");
                                      }
                                  }
                                  
@@ -161,12 +164,12 @@ using Audit_Scanner.Models;
                                  {
                                      foreach (var device in vulnerableTelnetDevices)
                                      {
-                                         var deviceName = device.Hostname != null && device.Hostname != "" && !device.Hostname.Contains("not found")
-                                             ? device.Hostname
-                                             : device.IP;
+                                         var deviceName = device.Hostname == null || device.Hostname == "" || device.Hostname.ToLower() == "hostname not found."
+                                             ? device.IP
+                                             : device.Hostname;
                                          Console.WriteLine($"Starting telnet bruteforce on {deviceName}, please wait...");
-                                         
                                          bruteforceClient.BruteforceTelnet(device);
+                                         Console.WriteLine($"Starting SSH bruteforce on {deviceName}.");
                                      }
                                  }
                              }
@@ -188,21 +191,30 @@ using Audit_Scanner.Models;
                  Console.WriteLine($"MAC Address: {device.PhysicalAddress}");
                  Console.WriteLine($"Manufacturer: {device.Vendor}");
                  Console.WriteLine("");
-                 Console.WriteLine("Vulnerabilities:");
+                 Console.WriteLine($"Total Vulnerabilities: {device.Vulnerabilities.Count()}");
 
                  int counter = 1;
-                             
-                 foreach (var vulnerability in device.Vulnerabilities)
+
+                 foreach (var port in device.OpenPorts)
                  {
-                     Console.WriteLine($"---- Vulnerability ({counter}/{device.Vulnerabilities.Count()}) ----");
-                     Console.WriteLine($"Service: {vulnerability.Service}");
-                     Console.WriteLine($"Port: {vulnerability.Port}");
-                     Console.WriteLine($"Type: {vulnerability.Type}");
-                     if (!String.IsNullOrWhiteSpace(vulnerability.CVE)) Console.WriteLine($"CVE: {vulnerability.CVE}");
-                     Console.WriteLine($"Source: {vulnerability.Source}");
-                     Console.WriteLine($"Details: {vulnerability.Description}");
-                     Console.WriteLine("");
-                     
+                     var vulnerabilities = device.Vulnerabilities.Where(p => port == p.Port).ToList();
+                     if (vulnerabilities.Any())
+                     {
+                         var vulnerability = vulnerabilities.Where(x => x.Date.HasValue)
+                             .OrderByDescending(x => x.Date.Value);
+
+                         if (vulnerability.Any())
+                         {
+                             Console.WriteLine($"---- Vulnerabilities for {vulnerability.FirstOrDefault().Service} ----");
+                             Console.WriteLine($"This service has {vulnerability.Count()} vulnerabilities, details of the latest vulnerability displayed below.");
+                             Console.WriteLine($"Port: {vulnerability.FirstOrDefault().Port}");
+                             Console.WriteLine($"Type: {vulnerability.FirstOrDefault().Type}");
+                             if (!String.IsNullOrWhiteSpace(vulnerability.FirstOrDefault().CVE)) Console.WriteLine($"CVE: {vulnerability.FirstOrDefault().CVE}");
+                             Console.WriteLine($"Source: {vulnerability.FirstOrDefault().Source}");
+                             Console.WriteLine($"Details: {vulnerability.FirstOrDefault().Description}");
+                             Console.WriteLine("");
+                         }
+                     }
                      counter += 1;
                  }
              }

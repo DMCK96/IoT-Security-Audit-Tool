@@ -17,14 +17,12 @@ namespace Audit_Scanner.Network
     {
         public List<string> LocalIPList = NetworkInterfaceHelper.GetLocalIpList();
         
-        public List<Host> HostDiscover(string ip, bool known, string range = "24")
+        public List<Host> HostDiscover(bool known, string ip = "192.168.137.0", string range = "24")
         {
             Target target;
             var foundHosts = new List<Host>();
             Console.WriteLine("");
-            var timer = new Stopwatch();;
-            timer.Start();
-            
+
             if (known)
             {
                 target = new Target(ip);
@@ -45,8 +43,8 @@ namespace Audit_Scanner.Network
                     Console.WriteLine($"Host discovery found {discovery.Count()} online devices in {address}/{range}");
                 }
             }
-            timer.Stop();
-            Console.WriteLine($"Host discovery scan completed, {foundHosts.Count} online devices have been found. Scan took {timer.Elapsed.Seconds} seconds to complete.");
+            
+            Console.WriteLine($"Host discovery scan completed, {foundHosts.Count} online devices have been found.");
             return foundHosts;
         }
 
@@ -66,7 +64,7 @@ namespace Audit_Scanner.Network
                 {
                     // No reason to audit a device that has no open ports
                     updatedDevices.AddRange(services);
-                    Console.WriteLine($"Service scanner has found {services.FirstOrDefault().Ports.Count()} open ports on {device.Address}");
+                    Console.WriteLine($"Service scanner has found {services.FirstOrDefault().Ports.Where(p => p.Service.Product != null).Count()} open ports on {device.Address}");
                 }
             }
             
