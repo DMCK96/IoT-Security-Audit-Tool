@@ -40,7 +40,7 @@ namespace Audit_Scanner
             if (selection == "1")
             {
                 Console.WriteLine("");
-                Console.WriteLine("Please input the IP of the local device to be scanned:");
+                Console.WriteLine("Please input the IP or hostname of the local device to be scanned:");
                 var address = Console.ReadLine();
 
                 IPAddress ipAddress = null;
@@ -186,7 +186,7 @@ namespace Audit_Scanner
         {
             Console.WriteLine("");
             Console.WriteLine("Potential vulnerabilities have been found in your devices!");
-            Console.WriteLine("Displaying most recent vulnerabilities (maximum 5):");
+            Console.WriteLine("Displaying the most recent vulnerability for each vulnerable service:");
             Console.WriteLine("");
 
             foreach (var device in vulnerableDevices)
