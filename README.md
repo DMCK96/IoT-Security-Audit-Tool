@@ -11,7 +11,9 @@ The audience of this tool were those with absolutely no prior security experienc
 
 This tool has two requirements nmap and .Net Framework 4.8. 
 
-Nmap must be installed and it must have the PATH registered (this is selected by default during installation).
+Nmap download: https://nmap.org/download.html
+
+Nmap must be installed and it **must have the PATH registered (this is selected by default during installation)**. You will quickly get an error from SaltwaterTaffy if this PATH is not set correctly.
 
 IoT-Security-Audit-Tool\Audit Scanner\Resources\Credentials.csv must not be open when the software is running, this will prevent the brute-force module being able to read the file and load the credentials.
 
