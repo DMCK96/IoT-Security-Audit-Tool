@@ -18,3 +18,9 @@ Nmap must be installed and it **must have the PATH registered (this is selected 
 IoT-Security-Audit-Tool\Audit Scanner\Resources\Credentials.csv must not be open when the software is running, this will prevent the brute-force module being able to read the file and load the credentials.
 
 Once built the software can be ran from IoT-Security-Audit-Tool\Audit Scanner\bin\Release\Audit_Scanner.exe
+
+## Credit
+
+My software uses a modified version of SaltWater Taffy by Thom Dixon that is available from here: https://github.com/thomdixon/SaltwaterTaffy 
+
+My software also makes use of MinimalisticTelnet by Tom Jannsens available at: https://www.codeproject.com/Articles/19071/Quick-tool-A-minimalistic-Telnet-library
